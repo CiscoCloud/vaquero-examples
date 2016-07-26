@@ -1,0 +1,52 @@
+{
+    "id": "etcd-proxy",
+    "name": "Etcd Cluster",
+    "hosts": [
+        {
+            "id": "proxy1",
+            "selectors": {
+                "mac": "00:00:00:00:00:04"
+            },
+            "metadata": {
+            }   
+        },
+        {
+            "id": "proxy2",
+            "selectors": {
+                "mac": "00:00:00:00:00:05"
+            }
+        },
+        {
+            "id": "host3",
+            "selectors": {
+                "mac": "00:00:00:00:00:03"
+            },
+            "metadata": {
+                "ipv4_address": "{{ .etcdnodes.node3.ipv4 }}",
+                "etcd_name": "{{ .etcdnodes.node3.etcd_name }}",
+                "networkd_address": "{{ .etcdnodes.node3.networkd_address }}",
+                "fleet_metadata": "role=etcd,name={{ .etcdnodes.node3.etcd_name }}"
+            }
+        }
+    ],
+    "operating_system": "coreos-1053.2.0-stable",
+    "cmdline": {
+        "coreos.config.url": "{{ .provisioner_url }}:8080/ignition?uuid=${uuid}&mac=${net0/mac:hexhyp}",
+        "coreos.autologin": "",
+        "coreos.first_boot": ""
+    },
+    "metadata": {
+        "fleet_metadata": "role=etcd-proxy",
+        "etcd_initial_cluster": "{{ .etcd_initial_cluster }}",
+        "ssh_authorized_keys": []
+    },
+    "asset_needs": {
+        "ignition": [
+            "etcd-proxy.yaml"
+        ],
+        "static": [
+            "coreos/899.17.0/coreos_production_pxe.vmlinuz",
+            "coreos/899.17.0/coreos_production_pxe_image.cpio.gz"
+        ]
+    }
+}

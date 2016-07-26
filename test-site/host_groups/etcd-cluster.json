@@ -1,0 +1,64 @@
+{
+    "id": "etcd-cluster",
+    "name": "Etcd Cluster",
+    "hosts": [
+        {
+            "id": "host1",
+            "selectors": {
+                "mac": "00:00:00:00:00:01"
+            },
+            "metadata": {
+                "ipv4_address": "{{ .etcdnodes.node1.ipv4 }}",
+                "etcd_name": "{{ .etcdnodes.node1.etcd_name }}",
+                "networkd_address": "{{ .etcdnodes.node1.networkd_address }}",
+                "fleet_metadata": "role=etcd,name={{ .etcdnodes.node1.etcd_name }}"
+            }   
+        },
+        {
+            "id": "host2",
+            "selectors": {
+                "mac": "00:00:00:00:00:02"
+            },
+            "metadata": {
+                "ipv4_address": "{{ .etcdnodes.node2.ipv4 }}",
+                "etcd_name": "{{ .etcdnodes.node2.etcd_name }}",
+                "networkd_address": "{{ .etcdnodes.node2.networkd_address }}",
+                "fleet_metadata": "role=etcd,name={{ .etcdnodes.node2.etcd_name }}"
+            },
+
+        },
+        {
+            "id": "host3",
+            "selectors": {
+                "mac": "00:00:00:00:00:03"
+            },
+            "metadata": {
+                "ipv4_address": "{{ .etcdnodes.node3.ipv4 }}",
+                "etcd_name": "{{ .etcdnodes.node3.etcd_name }}",
+                "networkd_address": "{{ .etcdnodes.node3.networkd_address }}",
+                "fleet_metadata": "role=etcd,name={{ .etcdnodes.node3.etcd_name }}"
+            }
+        }
+    ],
+    "operating_system": "coreos-1053.2.0-stable",
+    "cmdline": {
+        "coreos.config.url": "{{ .provisioner_url }}:8080/ignition?uuid=${uuid}&mac=${net0/mac:hexhyp}",
+        "coreos.autologin": "",
+        "coreos.first_boot": ""
+    },
+    "metadata": {
+        "etcd_initial_cluster": "{{ .etcd_initial_cluster }}",
+        "networkd_gateway": "{{ .networkd_gateway }}",
+        "networkd_dns": "{{ .networkd_dns }}",
+        "ssh_authorized_keys": []
+    },
+    "asset_needs": {
+        "ignition": [
+            "etcd.yaml"
+        ],
+        "static": [
+            "coreos/899.17.0/coreos_production_pxe.vmlinuz",
+            "coreos/899.17.0/coreos_production_pxe_image.cpio.gz"
+        ]
+    }
+}

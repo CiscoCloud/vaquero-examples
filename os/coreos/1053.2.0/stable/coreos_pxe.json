@@ -1,0 +1,15 @@
+{
+    "id": "coreos-1053.2.0-stable",
+    "name": "CoreOS Stable 1053.2.0",
+    "major_version": "1053",
+    "minor_version": "2.0",
+    "os_family": "CoreOS",
+    "release_name": "stable",
+    "description": "CoreOS Stable 1053.2.0",
+    "root_pw_hash": "SHA512",
+    "root_pw": "password",
+    "boot": {
+        "kernel": "{{ .provisioner_url }}/{{ .coreos_path }}/coreos_production_pxe.vmlinuz",
+        "initrd": ["{{ .provisioner_url }}/{{ .coreos_path }}/coreos_production_pxe_image.cpio.gz"]
+    }
+}
