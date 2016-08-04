@@ -1,0 +1,42 @@
+---
+systemd:
+  units:
+    - name: etcd2.service
+      enable: true
+      dropins:
+        - name: 40-etcd-cluster.conf
+          contents: |
+            [Service]
+            Environment="ETCD_NAME={{.host.etcd_name}}"
+            Environment="ETCD_ADVERTISE_CLIENT_URLS=http://{{.host.ipv4_address}}:2379"
+            Environment="ETCD_INITIAL_ADVERTISE_PEER_URLS=http://{{.host.ipv4_address}}:2380"
+            Environment="ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379"
+            Environment="ETCD_LISTEN_PEER_URLS=http://{{.host.ipv4_address}}:2380"
+            Environment="ETCD_INITIAL_CLUSTER={{.env.etcd_initial_cluster}}"
+            Environment="ETCD_STRICT_RECONFIG_CHECK=true"
+    - name: fleet.service
+      enable: true
+      dropins:
+        - name: fleet-metadata.conf
+          contents: |
+            [Service]
+            Environment="FLEET_METADATA=role={{.group.role}},name={{.host.etcd_name}}"
+networkd:
+  units:
+    - name: 10-static.network
+      contents: |
+        [Match]
+        MACAddress={{.host.mac}}
+        [Network]
+        Gateway={{.env.networkd_gateway}}
+        DNS={{.env.networkd_dns}}
+        Address={{.host.networkd_address}}
+{{ if index .env "ssh_authorized_keys" }}
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys:
+        {{ range $element := .env.ssh_authorized_keys }}
+        - {{$element}}
+        {{end}}
+{{end}}

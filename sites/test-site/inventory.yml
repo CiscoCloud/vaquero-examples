@@ -1,0 +1,33 @@
+---
+host_group: etcd-proxy
+hosts:
+- name: proxy1
+  selectors:
+    mac: 00:00:00:00:00:04
+- name: proxy2
+  selectors:
+    mac: 00:00:00:00:00:05
+---
+host_group: etcd-cluster
+hosts:
+- name: host1
+  selectors:
+    mac: 00:00:00:00:00:01
+  metadata:
+    ipv4: 10.10.10.10
+    networkd_address: 10.10.10.10/16
+    etcd_name: node1
+- name: host2
+  selectors:
+    mac: 00:00:00:00:00:02
+  metadata:
+    ipv4: 10.10.10.11
+    networkd_address: 10.10.10.11/16
+    etcd_name: node2
+- name: host3
+  selectors:
+    mac: 00:00:00:00:00:03
+  metadata:
+    ipv4: 10.10.10.12
+    networkd_address: 10.10.10.12/16
+    etcd_name: node3
