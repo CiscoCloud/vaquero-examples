@@ -20,7 +20,7 @@ systemd:
         - name: fleet-metadata.conf
           contents: |
             [Service]
-            Environment="FLEET_METADATA=role={{.group.role}},name={{.host.etcd_name}}"
+            Environment="FLEET_METADATA=role={{.group.fleet_role}},name={{.host.etcd_name}}"
 networkd:
   units:
     - name: 10-static.network

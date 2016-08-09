@@ -14,20 +14,20 @@ hosts:
   selectors:
     mac: 00:00:00:00:00:01
   metadata:
-    ipv4: 10.10.10.10
+    ipv4_address: 10.10.10.10
     networkd_address: 10.10.10.10/16
     etcd_name: node1
 - name: host2
   selectors:
     mac: 00:00:00:00:00:02
   metadata:
-    ipv4: 10.10.10.11
+    ipv4_address: 10.10.10.11
     networkd_address: 10.10.10.11/16
     etcd_name: node2
 - name: host3
   selectors:
     mac: 00:00:00:00:00:03
   metadata:
-    ipv4: 10.10.10.12
+    ipv4_address: 10.10.10.12
     networkd_address: 10.10.10.12/16
     etcd_name: node3
