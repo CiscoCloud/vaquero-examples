@@ -4,9 +4,6 @@ hosts:
 - name: proxy1
   selectors:
     mac: 00:00:00:00:00:04
-- name: proxy2
-  selectors:
-    mac: 00:00:00:00:00:05
 ---
 host_group: etcd-cluster
 hosts:
