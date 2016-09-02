@@ -13,6 +13,12 @@ hosts:
   metadata:
     ipv4_address: 10.10.10.12
     networkd_address: 10.10.10.12/24
+- name: proxy3
+  selectors:
+    mac: 00:00:00:00:00:06
+  metadata:
+    ipv4_address: 10.10.10.15
+    networkd_address: 10.10.10.15/24
 ---
 host_group: etcd-cluster
 hosts:
