@@ -1,3 +1,3 @@
 # vaquero
 
-Model for testing standalone mode
+Model for testing standalone mode running on localhost
