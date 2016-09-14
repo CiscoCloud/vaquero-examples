@@ -1,0 +1,29 @@
+---
+id: clevos-basic
+name: ClevOS
+major_version: '3'
+minor_version: '7.2'
+os_family: ClevOS
+release_name: acc
+boot:
+  kernel: "{{.agent.url}}/files/boot/accclevos.vmlinuz"
+  initrd:
+  - "{{.agent.url}}/files/boot/acc/clevos.initrd"
+cmdline:
+  # Have to manually specify 'untyped' kernel opts
+  lang: ' '
+  live-getty: ''
+  console: 'ttyS0,115200n8'
+  console: 'tty0'
+  union: 'aufs'
+  text: ''
+  boot: 'live'
+  live-netdev: 'eth2'
+  ethdevice: 'eth2'
+  ethdevice-timeout: '300'
+  clevos.runinstall:
+  noprompt: 
+  clevos.installer.answers: "{{.host.configUrl}}" # configUrl is the full URL (with selectors) for this host's unattened config script
+  dhcp: 
+  config:
+  fetch: 
