@@ -5,7 +5,7 @@ name: Etcd Proxies
 operating_system: coreos-1053.2.0-stable
 
 unattended:
-  type: ignition
+  type: cloud-config
   use: etcd-proxy.yaml
 
 metadata:
