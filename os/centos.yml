@@ -1,0 +1,12 @@
+---
+id: centos7
+name: CentOS 7.2
+major_version: '7'
+minor_version: '2'
+os_family: CentOS
+release_name: stable
+boot:
+  kernel: "{{.agent.url}}/files/centos/7/os/x86_64/images/pxeboot/vmlinuz"
+  initrd:
+  - "{{.agent.url}}/centos/7/os/x86_64/images/pxeboot/initrd.img"
+cmdline:

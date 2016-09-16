@@ -32,11 +32,10 @@ hosts:
     networkd_address: 10.10.10.12/16
     etcd_name: node3
 ---
-host_group: clevos
+host_group: memsql
 hosts:
-- name: clevos1
+- name: memsql1
   selectors:
     mac: 00:00:00:00:00:06
   metadata:
-    ipv4_address: 192.128.1.16
-    clever_name: haha
+    

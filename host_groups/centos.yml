@@ -1,0 +1,22 @@
+---
+id: memsql
+name: Memsql 7
+
+operating_system: centos7
+
+unattended:
+  type: kickstart
+  use: memsql.ks
+
+metadata:
+  root_pass: ZcM4SuK5Qpf2Q #cisco123 default unix
+  selinux: enforcing
+  # bootloader_append: ''
+  grub_pass: hihihi
+  os_major: '7'
+  os_minor: '2'
+  architecture: x86_64
+  memsql_availgroup: memsql_availgroup
+  memsql_master: memsql_master
+  lang: en_US.UTF-8
+  

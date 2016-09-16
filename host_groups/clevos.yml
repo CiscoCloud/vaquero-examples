@@ -1,9 +1,0 @@
----
-id: clevos
-name: ClevOS 3.7
-
-operating_system: clevos-basic # TODO: actually create a ClevOS object
-
-unattended:
-  type: untyped
-  use: clevos-answers.provision
