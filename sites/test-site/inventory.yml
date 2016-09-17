@@ -37,3 +37,12 @@ hosts:
   metadata:
     ipv4_address: 192.128.1.16
     clever_name: haha
+---
+host_group: centos
+hosts:
+- name: centos
+  selectors:
+    mac: 00:00:00:00:00:09
+  metadata:
+    ipv4_address: 10.10.10.17
+    networkd_address: 10.10.10.17/16
