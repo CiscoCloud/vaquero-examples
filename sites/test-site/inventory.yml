@@ -40,18 +40,21 @@ hosts:
 ---
 host_group: coreos-write-disk
 hosts:
-- name: kube_master-write
+- name: kube_master
   selectors:
     mac: 00:00:00:00:00:07
-- name: etcd1-write
+- name: etcd1
   selectors:
     mac: 00:00:00:00:00:08
-- name: etcd2-write
+- name: etcd2
   selectors:
     mac: 00:00:00:00:00:09
-- name: etcd3-write
+- name: etcd3
   selectors:
     mac: 00:00:00:00:00:0A
+- name: node
+  selectors:
+    mac: 00:00:00:00:00:0B
 ---
 host_group: coreos
 hosts:
@@ -60,6 +63,8 @@ hosts:
     mac: 00:00:00:00:00:07
     rootvol: sda1
   metadata:
+    mstr: etcd-n1
+    role: kube-master
     ip: 10.10.10.9
     vlan: 487
     interfaces:
@@ -73,6 +78,8 @@ hosts:
     mac: 00:00:00:00:00:08
     rootvol: sda1
   metadata:
+    mstr: etcd-n1
+    role: kube-master
     ip: 10.10.10.10
     vlan: 487
     interfaces:
@@ -86,6 +93,8 @@ hosts:
     mac: 00:00:00:00:00:09
     rootvol: sda1
   metadata:
+    mstr: etcd-n2
+    role: kube-master
     ip: 10.10.10.11
     vlan: 487
     interfaces:
@@ -99,6 +108,22 @@ hosts:
     mac: 00:00:00:00:00:0A
     rootvol: sda1
   metadata:
+    mstr: etcd-n3
+    role: kube-master
+    ip: 10.10.10.12
+    vlan: 487
+    interfaces:
+      first:
+        identifier: eth0
+        mac: 00:00:00:00:00:0A
+      second:
+        identifier: eth1
+- name: node
+  selectors:
+    mac: 00:00:00:00:00:0B
+    rootvol: sda1
+  metadata:
+    role: kube-node
     ip: 10.10.10.12
     vlan: 487
     interfaces:

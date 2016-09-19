@@ -38,21 +38,12 @@ coreos:
     reboot-strategy: off
 
   etcd2:
-  {{ $role := "kube-master" }}
-  {{ $mstr := "" }}
-  {{ if eq .host.ip .env.etcd_n1 }}
-    {{ $mstr := "etcd-n1" }}
-  {{ else if eq .host.ip .env.etcd_n2 }}
-    {{ $mstr := "etcd-n2" }}
-  {{ else if eq .host.ip .env.etcd_n3 }}
-    {{ $mstr := "etcd-n3" }}
-  {{ else }}
-  {{ $role := "kube-node" }}
+  {{ if eq .host.role "kube-node" }}
     proxy: on
   {{ end }}
-  {{ if eq $role "kube-master" }}
+  {{ if index .host "mstr" }}
     # local master enpoints
-    name: {{ $mstr }}
+    name: {{ .host.mstr }}
     initial-advertise-peer-urls: http://{{.host.ip}}:2380
     advertise-client-urls: http://{{.host.ip}}:2379
     listen-peer-urls: http://0.0.0.0:2380
@@ -65,10 +56,10 @@ coreos:
     initial-cluster: etcd-n1=http://{{.env.etcd_n1}}:2380,etcd-n2=http://{{.env.etcd_n2}}:2380,etcd-n3=http://{{.env.etcd_n3}}:2380
 
   fleet:
-  {{ if eq $role "kube-master" }}
-    metadata: "role={{$role}},kube-master={{$mstr}},vlan={{.host.vlan}},vlan-{{.host.vlan}}=true"
+  {{ if index .host "mstr" }}
+    metadata: "role={{.host.role}},kube-master={{.host.mstr}},vlan={{.host.vlan}},vlan-{{.host.vlan}}=true"
   {{ else }}
-    metadata: "role={{$role}},vlan={{.host.vlan}},vlan-{{.host.vlan}}=true"
+    metadata: "role={{.host.role}},vlan={{.host.vlan}},vlan-{{.host.vlan}}=true"
   {{ end }}
 
   units:
