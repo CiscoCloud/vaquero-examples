@@ -1,0 +1,181 @@
+#cloud-config
+{{ if hasField .host "rootvol"}}
+{{ template "coreos_cloudconfig" . }}
+{{ else }}
+{{ template "cloud_writefile" . }}
+{{ end }}
+
+{{ define "cloud_writefile" }}
+write_files:
+  - path: "/tmp/setup.sh"
+    permissions: "0755"
+    owner: "root"
+    content: |
+      #!/bin/bash
+
+      # find and format root device
+      ROOTDEV=`lsblk -p | grep disk | awk '{print $1}' | head -1`
+      sgdisk --zap-all $ROOTDEV
+      parted -s $ROOTDEV mktable gpt
+      parted -s $ROOTDEV mkpart root 0% 100%
+      ROOTDEV=${ROOTDEV}1
+      mkfs.ext4 -c -L ROOTVOL -F ${ROOTDEV}
+
+       # tell Foreman about the new rootvol and that the build is complete
+       curl -L -H "Content-Type:application/json" -H "Accept:application/json,version=2" -k -u api:c0mcast\! -X POST -d "{\"parameter\":{\"name\":\"rootvol\",\"value\":\"${ROOTDEV}\"}}" https://10.22.81.100/api/hosts/`hostname`/parameters
+       #curl -L -H "Content-Type:application/json" -H "Accept:application/json,version=2" -k -u api:c0mcast\! -X PUT -d "{\"build\":\"false\"}" https://10.22.81.100/api/hosts/`hostname`
+
+       # need to reboot to pick up the new root volume
+       sync
+       reboot
+{{ end }}
+
+{{ define "coreos_cloudconfig" }}
+coreos:
+
+  update:
+    group: stable
+    reboot-strategy: off
+
+  etcd2:
+  {{ $role := "kube-master" }}
+  {{ $mstr := "" }}
+  {{ if eq .host.ip .env.etcd_n1 }}
+    {{ $mstr := "etcd-n1" }}
+  {{ else if eq .host.ip .env.etcd_n2 }}
+    {{ $mstr := "etcd-n2" }}
+  {{ else if eq .host.ip .env.etcd_n3 }}
+    {{ $mstr := "etcd-n3" }}
+  {{ else }}
+  {{ $role := "kube-node" }}
+    proxy: on
+  {{ end }}
+  {{ if eq $role "kube-master" }}
+    # local master enpoints
+    name: {{ $mstr }}
+    initial-advertise-peer-urls: http://{{.host.ip}}:2380
+    advertise-client-urls: http://{{.host.ip}}:2379
+    listen-peer-urls: http://0.0.0.0:2380
+
+    # cross-origin resource sharing
+    cors: "*"
+  {{ end }}
+    # cluster endpoints
+    listen-client-urls: http://0.0.0.0:2379
+    initial-cluster: etcd-n1=http://{{.env.etcd_n1}}:2380,etcd-n2=http://{{.env.etcd_n2}}:2380,etcd-n3=http://{{.env.etcd_n3}}:2380
+
+  fleet:
+  {{ if eq $role "kube-master" }}
+    metadata: "role={{$role}},kube-master={{$mstr}},vlan={{.host.vlan}},vlan-{{.host.vlan}}=true"
+  {{ else }}
+    metadata: "role={{$role}},vlan={{.host.vlan}},vlan-{{.host.vlan}}=true"
+  {{ end }}
+
+  units:
+{{ if hasField .host "rootvol"}}
+    - name: docker.service
+      drop-ins:
+        - name: 10-docker-opts.conf
+          content: |
+            [Service]
+            # Setting max log size to 10M
+            Environment="DOCKER_OPTS=--log-driver=json-file --log-opt max-size=10m"
+    - name: early-docker.service
+      drop-ins:
+        - name: 10-docker-opts.conf
+          content: |
+            [Service]
+            # Setting max log size to 10M
+            Environment="DOCKER_OPTS=--log-driver=json-file --log-opt max-size=10m"
+    - name: down-interfaces.service
+      command: start
+      content: |
+        [Service]
+        Type=oneshot
+        ExecStart=-/usr/sbin/ethtool -L {{.host.interfaces.first.identifier}} combined 6
+        ExecStart=-/usr/sbin/ethtool -L {{.host.interfaces.second.identifier}} combined 6
+        ExecStart=/usr/bin/bash -c 'ip a show dev po0 | exit'
+        ExecStart=/usr/bin/ip link set {{.host.interfaces.first.identifier}} down
+        ExecStart=/usr/bin/ip addr flush dev {{.host.interfaces.first.identifier}}
+        ExecStart=/usr/bin/ip link set {{.host.interfaces.second.identifier}} down
+        ExecStart=/usr/bin/ip addr flush dev {{.host.interfaces.second.identifier}}
+    - name: systemd-networkd.service
+      command: restart
+{{ else }}
+    - name: setup.service
+      command: start
+      content: |
+        [Unit]
+        Description=Setup VIPER CoreOS
+        Author=VIPER
+
+        [Service]
+        ExecStart=/tmp/setup.sh
+{{ end }}
+    - name: etcd2.service
+      command: start
+    - name: fleet.service
+      command: start
+
+
+{{ if index .env "ssh_authorized_keys" }}
+ssh_authorized_keys:
+  {{ range $element := .env.ssh_authorized_keys }}
+  - {{$element}}
+  {{ end }}
+{{ else }}
+users:
+  - name: core
+    passwd: {{ .group.root_pass }}
+{{ end }}
+
+write_files:
+  - path: /etc/systemd/network/po0.netdev
+    permissions: 0644
+    owner: root
+    content: |
+      [NetDev]
+      Name=po0
+      Kind=bond
+
+      [Bond]
+      Mode=802.3ad
+      TransmitHashPolicy=layer3+4
+      LACPTransmitRate=fast
+      MIIMonitorSec=1
+  - path: /etc/systemd/network/po0.network
+    permissions: 0644
+    owner: root
+    content: |
+      [Match]
+      Name=po0
+
+      [Link]
+      MACAddress={{.host.interfaces.first.mac}}
+
+      [Network]
+      DHCP=ipv4
+      BindCarrier={{.host.interfaces.first.identifier}} {{.host.interfaces.second.identifier}}
+  - path: /etc/systemd/network/{{.host.interfaces.first.identifier}}.network
+    permissions: 0644
+    owner: root
+    content: |
+      [Match]
+      Name={{.host.interfaces.first.identifier}}
+
+      [Network]
+      Bond=po0
+  - path: /etc/systemd/network/{{.host.interfaces.second.identifier}}.network
+    permissions: 0644
+    owner: root
+    content: |
+      [Match]
+      Name={{.host.interfaces.second.identifier}}
+
+      [Network]
+      Bond=po0
+{{ end }}
+
+
+
+

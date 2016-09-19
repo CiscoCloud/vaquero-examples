@@ -1,0 +1,12 @@
+---
+id: coreos
+name: CoreOS host
+
+operating_system: coreos-1053.2.0-stable
+
+unattended:
+  type: cloud-config
+  use: coreos.yml
+
+metadata:
+  root_pass: ZcM4SuK5Qpf2Q #cisco123, default unix

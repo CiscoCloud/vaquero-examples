@@ -37,5 +37,55 @@ hosts:
 - name: memsql1
   selectors:
     mac: 00:00:00:00:00:06
+---
+host_group: coreos
+hosts:
+- name: kube_master
+  selectors:
+    mac: 00:00:00:00:00:07
   metadata:
+    ip: 10.10.10.9
+    vlan: 487
+    interfaces:
+      first:
+        identifier: eth0
+        mac: 00:00:00:00:00:07
+      second:
+        identifier: eth1
+- name: etcd1
+  selectors:
+    mac: 00:00:00:00:00:08
+  metadata:
+    ip: 10.10.10.10
+    vlan: 487
+    interfaces:
+      first:
+        identifier: eth0
+        mac: 00:00:00:00:00:08
+      second:
+        identifier: eth1
+- name: etcd2
+  selectors:
+    mac: 00:00:00:00:00:09
+  metadata:
+    ip: 10.10.10.11
+    vlan: 487
+    interfaces:
+      first:
+        identifier: eth0
+        mac: 00:00:00:00:00:09
+      second:
+        identifier: eth1
+- name: etcd3
+  selectors:
+    mac: 00:00:00:00:00:0A
+  metadata:
+    ip: 10.10.10.12
+    vlan: 487
+    interfaces:
+      first:
+        identifier: eth0
+        mac: 00:00:00:00:00:0A
+      second:
+        identifier: eth1
     
