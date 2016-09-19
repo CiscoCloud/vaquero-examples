@@ -5,8 +5,18 @@ hosts:
   selectors:
     mac: 00:00:00:00:00:05
   metadata:
-    ip: 10.10.10.13
+    ip: 127.0.0.10
     name: clevos1
+---
+host_group: clevos-accessor
+hosts:
+- name: accessor1
+  selectors:
+    mac: 00:00:00:00:00:15
+  metadata:
+    ip: 10.10.10.15
+    priv_ip: 127.0.0.12
+    name: accessor1
 ---
 host_group: memsql
 hosts:
@@ -100,7 +110,7 @@ hosts:
     rootvol: sda1
   metadata:
     role: kube-node
-    ip: 10.10.10.12
+    ip: 10.10.10.13
     vlan: 487
     interfaces:
       first:

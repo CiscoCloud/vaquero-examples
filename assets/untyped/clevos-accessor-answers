@@ -9,12 +9,16 @@ confirm = false
 reboot = true
 
 [post]
-script: channel data port p6p1, p7p1
+script: channel data port p6p1, p6p2
         channel data bonding balanced
-        channel data bond_xmit_policy layer2
         channel data ip {{.host.ip}}
-        channel data netmask {{.env.clevos_subnet.mask}}
-        channel data gateway {{.env.clevos_subnet.gateway}}
+        channel data netmask {{.env.subnet.mask}}
+        channel client port em1, em2
+        channel client bonding balanced
+        channel client ip {{.host.priv_ip}}
+        channel client netmask {{.env.clevos_subnet.mask}}
+        channel client gateway {{.env.clevos_subnet.gateway}}
+
         system hostname {{.host.name}}
         system organization cdvr
         system city philadelphia
