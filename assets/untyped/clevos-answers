@@ -1,0 +1,26 @@
+[install]
+type = factory
+
+[source]
+imagetype = self
+
+[ui]
+confirm = false
+reboot = true
+
+[post]
+script: channel data port p6p1, p7p1
+        channel data bonding balanced
+        channel data bond_xmit_policy layer2
+        channel data ip {{.host.ip}}
+        channel data netmask {{.env.subnet.mask}}
+        channel data gateway {{.env.subnet.gateway}}
+        system hostname {{.host.name}}
+        system organization cdvr
+        system city philadelphia
+        system state pa
+        system country us
+        system dns {{ range $i, $dns := .env.dns }}{{ if $i }},{{end}}{{$dns}}{{end}}
+        system ntpservers {{ range $i, $dns := .env.dns }}{{ if $i }},{{end}}{{$dns}}{{end}}
+        manager ip {{.env.clevos_manager}}=
+        password {{.group.root_pass}}

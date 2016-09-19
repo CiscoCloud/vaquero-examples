@@ -2,16 +2,16 @@ install
 text
 
 network --device ens18f0 --bootproto dhcp
-lang {{ if hasField .group "lang" }}{{.group.lang}}{{else}}en_US.UTF-8{{end}}
-keyboard {{ if hasField .group "keyboard" }}{{.group.keyboard}}{{else}}us{{end}}
+lang {{ if index .group "lang" }}{{.group.lang}}{{else}}en_US.UTF-8{{end}}
+keyboard {{ if index .group "keyboard" }}{{.group.keyboard}}{{else}}us{{end}}
 
 
 rootpw --iscrypted {{.group.root_pass}}
 firewall --disabled
 auth --enableshadow --passalgo=sha512
-selinux --{{ if hasField .group "selinux"}}{{.group.selinux}}{{else}}enforcing{{end}}
-timezone --utc {{ if hasField .env "time-zone"}}{{.env.timezone}}{{else}}UTC{{end}}
-bootloader --location=mbr --append="{{ if hasField .group "bootloader-append" }}{{.group.bootloader_append}}{{else}}nofb quiet splash=quiet{{end}}" {{.group.grub_pass}}
+selinux --{{ if index .group "selinux"}}{{.group.selinux}}{{else}}enforcing{{end}}
+timezone --utc {{ if index .env "time-zone"}}{{.env.timezone}}{{else}}UTC{{end}}
+bootloader --location=mbr --append="{{ if index .group "bootloader-append" }}{{.group.bootloader_append}}{{else}}nofb quiet splash=quiet{{end}}" {{.group.grub_pass}}
 services --enabled=NetworkManager,sshd,chronyd
 reboot
 

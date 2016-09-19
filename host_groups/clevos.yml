@@ -1,0 +1,12 @@
+---
+id: clevos
+name: ClevOS host
+
+operating_system: clevos-basic
+
+unattended:
+  type: untyped
+  use: clevos-answers
+
+metadata:
+  root_pass: ZcM4SuK5Qpf2Q #cisco123, default unix
