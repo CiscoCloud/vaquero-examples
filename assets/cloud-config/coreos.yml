@@ -1,5 +1,5 @@
 #cloud-config
-{{ if hasField .host "rootvol"}}
+{{ if index .host "rootvol"}}
 {{ template "coreos_cloudconfig" . }}
 {{ else }}
 {{ template "cloud_writefile" . }}
@@ -72,7 +72,7 @@ coreos:
   {{ end }}
 
   units:
-{{ if hasField .host "rootvol"}}
+{{ if index .host "rootvol"}}
     - name: docker.service
       drop-ins:
         - name: 10-docker-opts.conf

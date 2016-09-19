@@ -1,0 +1,9 @@
+---
+id: coreos-write-disk
+name: CoreOS host pre-boot
+
+operating_system: coreos-1053.2.0-stable
+
+unattended:
+  type: cloud-config
+  use: coreos.yml

@@ -38,11 +38,27 @@ hosts:
   selectors:
     mac: 00:00:00:00:00:06
 ---
+host_group: coreos-write-disk
+hosts:
+- name: kube_master-write
+  selectors:
+    mac: 00:00:00:00:00:07
+- name: etcd1-write
+  selectors:
+    mac: 00:00:00:00:00:08
+- name: etcd2-write
+  selectors:
+    mac: 00:00:00:00:00:09
+- name: etcd3-write
+  selectors:
+    mac: 00:00:00:00:00:0A
+---
 host_group: coreos
 hosts:
 - name: kube_master
   selectors:
     mac: 00:00:00:00:00:07
+    rootvol: sda1
   metadata:
     ip: 10.10.10.9
     vlan: 487
@@ -55,6 +71,7 @@ hosts:
 - name: etcd1
   selectors:
     mac: 00:00:00:00:00:08
+    rootvol: sda1
   metadata:
     ip: 10.10.10.10
     vlan: 487
@@ -67,6 +84,7 @@ hosts:
 - name: etcd2
   selectors:
     mac: 00:00:00:00:00:09
+    rootvol: sda1
   metadata:
     ip: 10.10.10.11
     vlan: 487
@@ -79,6 +97,7 @@ hosts:
 - name: etcd3
   selectors:
     mac: 00:00:00:00:00:0A
+    rootvol: sda1
   metadata:
     ip: 10.10.10.12
     vlan: 487
