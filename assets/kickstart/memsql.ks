@@ -17,12 +17,36 @@ reboot
 
 repo --name=centos7 --baseurl={{.env.centos_baseurl}}
 
-# TODO
+# TODO: do we ever use foreman's 'dynamic' mode?
 #<% if @dynamic -%>
 #%include /tmp/diskpart.cfg
 #<% else -%>
 #<%= @host.diskLayout %>
 #<% end -%>
+zerombr
+clearpart --all --initlabel
+
+part raid.01 --asprimary --fstype="raid" --ondisk=sda --size=500
+part raid.03 --fstype="raid" --grow --ondisk=sda --size=1
+part raid.02 --asprimary --fstype="raid" --ondisk=sdb --size=500
+part raid.04 --fstype="raid" --grow --ondisk=sdb --size=1
+part raid.05 --asprimary --fstype="raid" --grow --ondisk=sdc --size=1
+part raid.06 --asprimary --fstype="raid" --grow --ondisk=sdd --size=1
+part raid.07 --asprimary --fstype="raid" --grow --ondisk=sde --size=1
+part raid.08 --asprimary --fstype="raid" --grow --ondisk=sdf --size=1
+part raid.09 --asprimary --fstype="raid" --grow --ondisk=sdg --size=1
+part raid.10 --asprimary --fstype="raid" --grow --ondisk=sdh --size=1
+part raid.11 --asprimary --fstype="raid" --grow --ondisk=sdi --size=1
+part raid.12 --asprimary --fstype="raid" --grow --ondisk=sdj --size=1
+raid /boot --device=md0 --fstype="ext4" --level=1 raid.01 raid.02
+raid  pv.01 --device=md1 --fstype="ext4" --level=1 raid.03 raid.04
+raid /data --device=md2 --fstype="ext4" --level=10 raid.05 raid.06 raid.07 raid.08 raid.09 raid.10 raid.11 raid.12
+
+volgroup RootVolGroup00 --pesize=4096 pv.01
+logvol / --fstype=ext4 --name=lv_root --vgname=RootVolGroup00 --size=10000
+logvol swap --name=lv_swap --vgname=RootVolGroup00 --size=10000
+logvol /var --fstype=ext4 --name=lv_var --vgname=RootVolGroup00 --size=10000
+
 
 %packages
 @^compute-node-environment
