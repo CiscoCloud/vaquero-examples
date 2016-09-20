@@ -39,9 +39,6 @@ coreos:
     reboot-strategy: off
 
   etcd2:
-  {{ if eq .host.role "kube-node" }}
-    proxy: on
-  {{ end }}
   {{ if index .host "mstr" }}
     # local master enpoints
     name: {{ .host.mstr }}
@@ -51,6 +48,8 @@ coreos:
 
     # cross-origin resource sharing
     cors: "*"
+  {{ else }}
+    proxy: on
   {{ end }}
     # cluster endpoints
     listen-client-urls: http://0.0.0.0:2379
