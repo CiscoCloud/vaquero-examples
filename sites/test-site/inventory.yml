@@ -1,28 +1,9 @@
 ---
-host_group: coreos-write-disk
-hosts:
-- name: kube_master
-  selectors:
-    mac: 00:00:00:00:00:07
-- name: etcd1
-  selectors:
-    mac: 00:00:00:00:00:08
-- name: etcd2
-  selectors:
-    mac: 00:00:00:00:00:09
-- name: etcd3
-  selectors:
-    mac: 00:00:00:00:00:0A
-- name: node
-  selectors:
-    mac: 00:00:00:00:00:0B
----
 host_group: coreos
 hosts:
 - name: etcd1
   selectors:
     mac: 00:50:56:9a:4f:19
-    rootvol: installed
   metadata:
     mstr: etcd-n1
     role: kube-master
@@ -30,7 +11,6 @@ hosts:
 - name: etcd2
   selectors:
     mac: 00:50:56:9a:78:5a
-    rootvol: installed
   metadata:
     mstr: etcd-n2
     role: kube-master
@@ -38,7 +18,6 @@ hosts:
 - name: etcd3
   selectors:
     mac: 00:50:56:9a:77:79
-    rootvol: installed
   metadata:
     mstr: etcd-n3
     role: kube-master
@@ -46,28 +25,24 @@ hosts:
 - name: node1
   selectors:
     mac: 00:25:b5:36:0b:9f
-    rootvol: installed
   metadata:
     role: kube-node
     ip: 10.146.17.50
 - name: node2
   selectors:
     mac: 00:25:b5:36:0a:ef
-    rootvol: installed
   metadata:
     role: kube-node
     ip: 10.54.213.151
 - name: node3
   selectors:
     mac: 00:25:b5:36:0b:8f
-    rootvol: installed
   metadata:
     role: kube-node
     ip: 10.54.213.152
 - name: node4
   selectors:
     mac: 00:25:b5:36:0a:bf
-    rootvol: installed
   metadata:
     role: kube-node
     ip: 10.54.213.153

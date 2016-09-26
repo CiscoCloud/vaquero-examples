@@ -9,4 +9,4 @@ unattended:
   use: coreos.yml
 
 metadata:
-  root_pass: $6$YOxumbTJ$gSPlIcL5UWKe1DrD2kOdmlJFl2GSTJcELatcwmwOyY3APhvuCCfR4GsF4Efs09/4k4G6rpacytLxJooDuFLuy.
+  root_pass: $1$JWVShPT1$1Jv/SxGXj96sQ1IKgkUTg0

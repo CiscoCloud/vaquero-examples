@@ -9,9 +9,8 @@ unattended:
   use: memsql.ks
 
 metadata:
-  root_pass: ZcM4SuK5Qpf2Q #cisco123 default unix
+  root_pass: $1$JWVShPT1$1Jv/SxGXj96sQ1IKgkUTg0
   selinux: enforcing
-  # bootloader_append: ''
   grub_pass: hihihi
   os_major: '7'
   os_minor: '2'

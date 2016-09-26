@@ -9,4 +9,4 @@ unattended:
   use: clevos-accessor-answers
 
 metadata:
-  root_pass: ZcM4SuK5Qpf2Q #cisco123, default unix
+  root_pass: $1$JWVShPT1$1Jv/SxGXj96sQ1IKgkUTg0

@@ -1,11 +1,4 @@
 #cloud-config
-{{ if index .host "rootvol"}}
-{{ template "coreos_cloudconfig" . }}
-{{ else }}
-{{ template "cloud_writefile" . }}
-{{ end }}
-
-{{ define "cloud_writefile" }}
 write_files:
   - path: "/tmp/setup.sh"
     permissions: "0755"
@@ -15,33 +8,25 @@ write_files:
 
       # find and format root device
       ROOTDEV=`lsblk -p | grep disk | awk '{print $1}' | head -1`
-      sgdisk --zap-all $ROOTDEV
-      parted -s $ROOTDEV mktable gpt
-      parted -s $ROOTDEV mkpart root 0% 100%
-      ROOTDEV=${ROOTDEV}1
-
-      mkfs.ext4 -c -L ROOTVOL -F ${ROOTDEV}
-
-      # need to reboot to pick up the new root volume
-      sync
-      fsck -y ${ROOTDEV}
-      if [ $? -ne 0 ]; then
-         echo "FSCK FAILED!  CHECK FILESYTEM MANUALLY!!" > /dev/console
-      else
-         # tell Foreman about the new rootvol and that the build is complete
-         curl -L -H "Content-Type:application/json" -H "Accept:application/json,version=2" -k -u api:c0mcast\! -X POST -d "{\"parameter\":{\"name\":\"rootvol\",\"value\":\"${ROOTDEV}\"}}" https://10.22.81.100/api/hosts/`hostname`/parameters
-         #curl -L -H "Content-Type:application/json" -H "Accept:application/json,version=2" -k -u api:c0mcast\! -X PUT -d "{\"build\":\"false\"}" https://10.22.81.100/api/hosts/`hostname`
-
-         # tell Foreman about the new rootvol and that the build is complete
-         curl "{{.agent.url}}/cloud-config?{{range $k, $v := .host.selectors}}{{$k}}={{$v}}&{{end}}rootvol=installed" -o cloud.cfg 
-
-         coreos-install -d ${ROOTDEV} -i cloud.cfg
-
-         sleep 5
-         reboot
+      # check if the partition already exists
+      PARTED=`lsblk -p | grep part | grep ${ROOTDEV} | awk '{print $1}' | head -1`
+      if [[ ${PARTED} != \`-${ROOTDEV}1 ]]; then
+        sgdisk --zap-all $ROOTDEV
+        parted -s $ROOTDEV mktable gpt
+        parted -s $ROOTDEV mkpart root 0% 100%
+        ROOTDEV=${ROOTDEV}1
+        mkfs.ext4 -c -L ROOTVOL -F ${ROOTDEV}
+        # need to reboot to pick up the new root volume
+        sync
+        fsck -y ${ROOTDEV}
+        if [ $? -ne 0 ]; then
+           echo "FSCK FAILED!  CHECK FILESYTEM MANUALLY!!" > /dev/console
+        else
+           sleep 5
+           reboot
+        fi
       fi
-{{ end }}
-{{ define "coreos_cloudconfig" }}
+
 coreos:
 
   update:
@@ -68,14 +53,13 @@ coreos:
 
   fleet:
   {{ if index .host "mstr" }}
-    metadata: "role={{.host.role}},kube-master={{.host.mstr}},vlan={{.host.vlan}},vlan-{{.host.vlan}}=true{{if index .host "fleetadd"}}{{.host.fleetadd}}{{end}}"
+    metadata: "role={{.host.role}},kube-master={{.host.mstr}},vlan={{.env.subnet.vlan}},vlan-{{.env.subnet.vlan}}=true{{if index .host "fleetadd"}}{{.host.fleetadd}}{{end}}"
   {{ else }}
-    metadata: "role={{.host.role}},vlan={{.host.vlan}},vlan-{{.host.vlan}}=true{{if index .host "fleetadd"}}{{.host.fleetadd}}{{end}}"
+    metadata: "role={{.host.role}},vlan={{.env.subnet.vlan}},vlan-{{.env.subnet.vlan}}=true{{if index .host "fleetadd"}}{{.host.fleetadd}}{{end}}"
   {{ end }}
 
   units:
-  #TODO: This looks dirty :(
-{{ if index .host "rootvol" | not}}
+{{ if not (index .host "rootvol")}}
     - name: setup.service
       command: start
       content: |
