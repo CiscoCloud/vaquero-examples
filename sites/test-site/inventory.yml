@@ -1,5 +1,6 @@
 ---
 host_group: coreos
+subnet: vagrant1
 hosts:
 - name: etcd1
   selectors:
