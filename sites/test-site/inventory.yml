@@ -21,7 +21,7 @@ hosts:
   metadata:
     mstr: etcd-n3
     role: kube-master
-    ip:10.10.10.12
+    ip: 10.10.10.12
 - name: node1
   selectors:
     mac: 00:00:00:00:00:04
