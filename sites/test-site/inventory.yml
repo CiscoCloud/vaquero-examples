@@ -4,7 +4,7 @@ subnet: default
 hosts:
 - name: clevos_test
   selectors:
-    mac: "<TODO: mac>"
+    mac: ab:cd:ab:cd:ab:cd
   metadata:
     name: clevos1
     ipaddr: "<TODO: provisioned IP>"
@@ -27,6 +27,8 @@ hosts:
 - name: clevos_test
   selectors:
     mac: "<TODO: mac>"
+  metadata:
+    ipaddr: "<TODO: provisioned IP>"
 ---
 host_group: coreos
 subnet: default
