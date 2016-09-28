@@ -1,5 +1,35 @@
 ---
+host_group: clevos
+subnet: default
+hosts:
+- name: clevos_test
+  selectors:
+    mac: "<TODO: mac>"
+  metadata:
+    name: clevos1
+    ipaddr: "<TODO: provisioned IP>"
+    priv_ipaddr: "<TODO: private IP>"
+---
+host_group: clevos-accessor
+subnet: default
+hosts:
+- name: clevos_test
+  selectors:
+    mac: "<TODO: mac>"
+  metadata:
+    name: clevos1
+    ipaddr: "<TODO: provisioned IP>"
+    priv_ipaddr: "<TODO: private IP>"
+---
+host_group: memsql
+subnet: default
+hosts:
+- name: clevos_test
+  selectors:
+    mac: "<TODO: mac>"
+---
 host_group: coreos
+subnet: default
 hosts:
 - name: etcd1
   selectors:
@@ -7,42 +37,42 @@ hosts:
   metadata:
     mstr: etcd-n1
     role: kube-master
-    ip: 10.54.213.135
+    ipaddr: 10.54.213.135
 - name: etcd2
   selectors:
     mac: 00:50:56:9a:78:5a
   metadata:
     mstr: etcd-n2
     role: kube-master
-    ip: 10.54.213.136
+    ipaddr: 10.54.213.136
 - name: etcd3
   selectors:
     mac: 00:50:56:9a:77:79
   metadata:
     mstr: etcd-n3
     role: kube-master
-    ip: 10.54.213.137
+    ipaddr: 10.54.213.137
 - name: node1
   selectors:
     mac: 00:25:b5:36:0b:9f
   metadata:
     role: kube-node
-    ip: 10.146.17.50
+    ipaddr: 10.146.17.50
 - name: node2
   selectors:
     mac: 00:25:b5:36:0a:ef
   metadata:
     role: kube-node
-    ip: 10.54.213.151
+    ipaddr: 10.54.213.151
 - name: node3
   selectors:
     mac: 00:25:b5:36:0b:8f
   metadata:
     role: kube-node
-    ip: 10.54.213.152
+    ipaddr: 10.54.213.152
 - name: node4
   selectors:
     mac: 00:25:b5:36:0a:bf
   metadata:
     role: kube-node
-    ip: 10.54.213.153
+    ipaddr: 10.54.213.153

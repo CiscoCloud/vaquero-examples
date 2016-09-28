@@ -37,8 +37,8 @@ coreos:
   {{ if eq .host.role "kube-master" }}
     # local master enpoints
     name: {{ .host.mstr }}
-    initial-advertise-peer-urls: http://{{.host.ip}}:2380
-    advertise-client-urls: http://{{.host.ip}}:2379
+    initial-advertise-peer-urls: http://{{.host.ipaddr}}:2380
+    advertise-client-urls: http://{{.host.ipaddr}}:2379
     listen-peer-urls: http://0.0.0.0:2380
 
     # cross-origin resource sharing

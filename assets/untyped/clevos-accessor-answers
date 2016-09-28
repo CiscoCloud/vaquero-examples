@@ -11,11 +11,11 @@ reboot = true
 [post]
 script: channel data port p6p1, p6p2
         channel data bonding balanced
-        channel data ip {{.host.ip}}
-        channel data netmask {{.env.subnet.mask}}
+        channel data ip {{.host.ipaddr}}
+        channel data netmask {{.host.subnet.netmask}}
         channel client port em1, em2
         channel client bonding balanced
-        channel client ip {{.host.priv_ip}}
+        channel client ip {{.host.priv_ipaddr}}
         channel client netmask {{.env.clevos_subnet.mask}}
         channel client gateway {{.env.clevos_subnet.gateway}}
 
@@ -24,7 +24,7 @@ script: channel data port p6p1, p6p2
         system city philadelphia
         system state pa
         system country us
-        system dns {{ range $i, $dns := .env.dns }}{{ if $i }},{{end}}{{$dns}}{{end}}
-        system ntpservers {{ range $i, $dns := .env.dns }}{{ if $i }},{{end}}{{$dns}}{{end}}
+        system dns {{ range $i, $dns := .host.subnet.dns }}{{ if $i }},{{end}}{{$dns}}{{end}}
+        system ntpservers {{ range $i, $dns := .host.subnet.dns }}{{ if $i }},{{end}}{{$dns}}{{end}}
         manager ip {{.env.clevos_manager}}=
         password {{.group.root_pass}}
