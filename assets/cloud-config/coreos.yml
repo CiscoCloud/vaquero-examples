@@ -53,9 +53,9 @@ coreos:
 
   fleet:
   {{ if index .host "mstr" }}
-    metadata: "role={{.host.role}},kube-master={{.host.mstr}},vlan={{.env.subnet.vlan}},vlan-{{.env.subnet.vlan}}=true{{if index .host "fleetadd"}}{{.host.fleetadd}}{{end}}"
+    metadata: "role={{.host.role}},kube-master={{.host.mstr}},vlan={{.host.interface.vlan}},vlan-{{.host.interface.vlan}}=true{{if index .host "fleetadd"}}{{.host.fleetadd}}{{end}}"
   {{ else }}
-    metadata: "role={{.host.role}},vlan={{.env.subnet.vlan}},vlan-{{.env.subnet.vlan}}=true{{if index .host "fleetadd"}}{{.host.fleetadd}}{{end}}"
+    metadata: "role={{.host.role}},vlan={{.host.interface.vlan}},vlan-{{.host.interface.vlan}}=true{{if index .host "fleetadd"}}{{.host.fleetadd}}{{end}}"
   {{ end }}
 
   units:
