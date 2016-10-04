@@ -4,7 +4,7 @@ subnet: default
 hosts:
 - name: proxy1
   selectors:
-    mac: 00:00:00:00:00:02
+    mac: 00:00:00:00:00:04
 ---
 host_group: etcd-cluster
 subnet: default
@@ -18,14 +18,14 @@ hosts:
     etcd_name: node1
 - name: host2
   selectors:
-    mac: 00:00:00:00:00:03
+    mac: 00:00:00:00:00:02
   metadata:
     ipv4_address: 10.10.10.11
     networkd_address: 10.10.10.11/16
     etcd_name: node2
 - name: host3
   selectors:
-    mac: 00:00:00:00:00:04
+    mac: 00:00:00:00:00:03
   metadata:
     ipv4_address: 10.10.10.12
     networkd_address: 10.10.10.12/16
@@ -35,7 +35,7 @@ host_group: clevos
 hosts:
 - name: clevos1
   selectors:
-    mac: 00:00:00:00:00:05
+    mac: 00:00:00:00:00:06
   metadata:
     ipv4_address: 192.128.1.16
     clever_name: haha
