@@ -1,11 +1,13 @@
 ---
 host_group: etcd-proxy
+subnet: default
 hosts:
 - name: proxy1
   selectors:
     mac: 00:00:00:00:00:04
 ---
 host_group: etcd-cluster
+subnet: default
 hosts:
 - name: host1
   selectors:
