@@ -1,3 +1,3 @@
-# vaquero
+# vaquero vagrant data model
 
-Model for testing standalone mode: in vagrant
+Complete model used for vagrant environment demo's and sandbox.
