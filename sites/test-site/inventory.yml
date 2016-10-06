@@ -60,16 +60,6 @@ hosts:
     mac: 00:00:00:00:00:34
   metadata:
     ip: 10.10.10.34
-- name: proxy2
-  selectors:
-    mac: 00:00:00:00:00:35
-  metadata:
-    ip: 10.10.10.35
-- name: proxy3
-  selectors:
-    mac: 00:00:00:00:00:36
-  metadata:
-    ip: 10.10.10.36
 ---
 host_group: centos
 subnet: vagrant1
