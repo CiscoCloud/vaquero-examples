@@ -75,16 +75,16 @@ host_group: centos
 subnet: vagrant1
 - name: centos1
   selectors:
-    mac: 00:00:00:00:00:51
+    mac: 00:00:00:00:00:41
   metadata:
-    ip: 10.10.10.51
+    ip: 10.10.10.41
 - name: centos2
   selectors:
-    mac: 00:00:00:00:00:52
+    mac: 00:00:00:00:00:42
   metadata:
-    ip: 10.10.10.52
+    ip: 10.10.10.42
 - name: centos3
   selectors:
-    mac: 00:00:00:00:00:53
+    mac: 00:00:00:00:00:43
   metadata:
-    ip: 10.10.10.53
+    ip: 10.10.10.43
