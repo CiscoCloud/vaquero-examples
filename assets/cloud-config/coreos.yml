@@ -18,7 +18,7 @@ coreos:
 
     # cluster endpoints
     listen-client-urls: http://0.0.0.0:2379
-    initial-cluster: {{ range $i, $node := .env.etcd_nodes }}{{ if $i }},{{end}}{{$node.name}}=http://{{$node.ip}}:2380{{end}}
+    initial-cluster: {{ range $i, $node := .env.etcd_cloud_nodes }}{{ if $i }},{{end}}{{$node.name}}=http://{{$node.ip}}:2380{{end}}
 
   fleet:
   {{ if index .host "mstr" }}

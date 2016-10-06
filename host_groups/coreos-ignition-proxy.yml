@@ -1,5 +1,5 @@
 ---
-id: etcd-proxy
+id: coreos-ignition-proxy
 name: Etcd Proxies
 
 operating_system: coreos-1053.2.0-stable

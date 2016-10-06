@@ -1,5 +1,5 @@
 ---
-id: coreos
+id: coreos-cloudconfig
 name: CoreOS host
 
 operating_system: coreos-1053.2.0-stable
@@ -9,4 +9,4 @@ unattended:
   use: coreos.yml
 
 metadata:
-  root_pass: $1$JWVShPT1$1Jv/SxGXj96sQ1IKgkUTg0
+  root_pass: $1$De/uvwHY$77ZDxv9lNwZJbwFziq4Ix0

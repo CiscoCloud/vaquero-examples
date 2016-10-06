@@ -1,49 +1,90 @@
 ---
-host_group: coreos
+host_group: coreos-cloudconfig
 subnet: vagrant1
 hosts:
 - name: etcd1
   selectors:
-    mac: 00:00:00:00:00:01
+    mac: 00:00:00:00:00:21
   metadata:
-    mstr: etcd-n1
+    mstr: etcd-c1
     role: kube-master
-    ip: 10.10.10.10
+    ip: 10.10.10.21
 - name: etcd2
   selectors:
-    mac: 00:00:00:00:00:02
+    mac: 00:00:00:00:00:22
   metadata:
-    mstr: etcd-n2
+    mstr: etcd-c2
     role: kube-master
-    ip: 10.10.10.11
+    ip: 10.10.10.22
 - name: etcd3
   selectors:
-    mac: 00:00:00:00:00:03
+    mac: 00:00:00:00:00:23
   metadata:
-    mstr: etcd-n3
+    mstr: etcd-c3
     role: kube-master
-    ip: 10.10.10.12
+    ip: 10.10.10.23
 - name: node1
   selectors:
-    mac: 00:00:00:00:00:04
+    mac: 00:00:00:00:00:24
   metadata:
     role: kube-node
-    ip: 10.10.10.13
-- name: node2
+    ip: 10.10.10.24
+---
+host_group: coreos-ignition-cluster
+subnet: vagrant1
+hosts:
+- name: etcd
   selectors:
-    mac: 00:00:00:00:00:05
+    mac: 00:00:00:00:00:31
   metadata:
-    role: kube-node
-    ip: 10.10.10.14
-- name: node3
+    mstr: etcd-i1
+    ip: 10.10.10.31
+- name: etcd2
   selectors:
-    mac: 00:00:00:00:00:06
+    mac: 00:00:00:00:00:32
   metadata:
-    role: kube-node
-    ip: 10.10.10.15
-- name: node4
+    mstr: etcd-i2
+    ip: 10.10.10.32
+- name: etcd3
   selectors:
-    mac: 00:00:00:00:00:07
+    mac: 00:00:00:00:00:33
   metadata:
-    role: kube-node
-    ip: 10.10.10.16
+    mstr: etcd-i3
+    ip: 10.10.10.33
+---
+host_group: coreos-ignition-proxy
+subnet: vagrant1
+hosts:
+- name: proxy1
+  selectors:
+    mac: 00:00:00:00:00:41
+  metadata:
+    ip: 10.10.10.41
+- name: proxy2
+  selectors:
+    mac: 00:00:00:00:00:42
+  metadata:
+    ip: 10.10.10.42
+- name: proxy3
+  selectors:
+    mac: 00:00:00:00:00:43
+  metadata:
+    ip: 10.10.10.43
+---
+host_group: centos
+subnet: vagrant1
+- name: centos1
+  selectors:
+    mac: 00:00:00:00:00:51
+  metadata:
+    ip: 10.10.10.51
+- name: centos2
+  selectors:
+    mac: 00:00:00:00:00:52
+  metadata:
+    ip: 10.10.10.52
+- name: centos3
+  selectors:
+    mac: 00:00:00:00:00:53
+  metadata:
+    ip: 10.10.10.53
