@@ -6,6 +6,6 @@ minor_version: '7.0'
 os_family: CentOS
 release_name: stable
 boot:
-  kernel: "{{.agent.url}}/files/centos.vmlinuz"
+  kernel: "{{.agent.url}}/files/centos7.vmlinuz"
   initrd:
-  - "{{.agent.url}}/files/centos.img"
+  - "{{.agent.url}}/files/centos7_initrd.img"
