@@ -1,4 +1,22 @@
 ---
+host_group: centos
+subnet: vagrant1
+- name: centos1
+  selectors:
+    mac: 00:00:00:00:00:41
+  metadata:
+    ip: 10.10.10.41
+- name: centos2
+  selectors:
+    mac: 00:00:00:00:00:42
+  metadata:
+    ip: 10.10.10.42
+- name: centos3
+  selectors:
+    mac: 00:00:00:00:00:43
+  metadata:
+    ip: 10.10.10.43
+---
 host_group: coreos-cloudconfig
 subnet: vagrant1
 hosts:
@@ -60,21 +78,3 @@ hosts:
     mac: 00:00:00:00:00:34
   metadata:
     ip: 10.10.10.34
----
-host_group: centos
-subnet: vagrant1
-- name: centos1
-  selectors:
-    mac: 00:00:00:00:00:41
-  metadata:
-    ip: 10.10.10.41
-- name: centos2
-  selectors:
-    mac: 00:00:00:00:00:42
-  metadata:
-    ip: 10.10.10.42
-- name: centos3
-  selectors:
-    mac: 00:00:00:00:00:43
-  metadata:
-    ip: 10.10.10.43
