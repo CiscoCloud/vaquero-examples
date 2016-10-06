@@ -37,16 +37,19 @@ hosts:
   selectors:
     mac: 00:00:00:00:00:31
   metadata:
+    name: etcd-i1
     ip: 10.10.10.31
 - name: etcd-i2
   selectors:
     mac: 00:00:00:00:00:32
   metadata:
+    name: etcd-i2
     ip: 10.10.10.32
 - name: etcd-i3
   selectors:
     mac: 00:00:00:00:00:33
   metadata:
+    name: etcd-i3
     ip: 10.10.10.33
 ---
 host_group: coreos-ignition-proxy
