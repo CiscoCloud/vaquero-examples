@@ -4,4 +4,6 @@ pipeline:
     privileged: true
     pull: true
     commands:
+      - docker daemon -g /var/lib/docker
+      - docker version
       - docker run -v /go/src/github.com/CiscoCloud/vaquero-examples:/vaquero/local shippedrepos-docker-vaquero.bintray.io/vaquero/vaquero:latest validate —sot /vaquero/local
