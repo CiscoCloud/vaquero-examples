@@ -1,0 +1,20 @@
+---
+name: proxy1
+interfaces:
+  - type: physical
+    dhcp: yes
+    subnet: default
+    mac: 00:00:00:00:00:04
+    identifier: eth0
+    ipv4: 10.10.10.13
+    hostname: proxy1
+---
+name: proxy2
+interfaces:
+  - type: physical
+    dhcp: yes
+    subnet: default
+    mac: 00:00:00:00:00:05
+    identifier: eth0
+    ipv4: 10.10.10.14
+    hostname: proxy2

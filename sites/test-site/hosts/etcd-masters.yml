@@ -1,0 +1,29 @@
+---
+name: host1
+interfaces:
+  - type: physical # <AMS> can be physical/bmc/bond/virtual
+    dhcp: yes
+    subnet: default
+    mac: 00:00:00:00:00:01
+    identifier: eth0
+    ipv4: 10.10.10.10
+    hostname: host1
+    # <AMS> could add ipv6 later
+---
+name: host2
+  - type: physical
+    dhcp: yes
+    subnet: default
+    mac: 00:00:00:00:00:02
+    identifier: eth0
+    ipv4: 10.10.10.11
+    hostname: host2
+---
+name: host3
+  - type: physical
+    dhcp: yes
+    subnet: default
+    mac: 00:00:00:00:00:03
+    identifier: eth0
+    ipv4: 10.10.10.12
+    hostname: host3
