@@ -1,21 +1,54 @@
 ---
 host_group: etcd-cluster
+bmc:
+  boot_prio: 0
+  max_concurrent: 1
+  flush_pipeline:
+    image: <docker_image>
+    commands:
+      - run commands
+    image: <docker_image2>
+    commands:
+      - run commands
+  resurrect_pipeline:
+    image: <docker_image>
+    commands:
+      - run commands
 hosts:
 - name: host1
     etcd_name: node1
+  bmc:
+    boot_prio: 1
 - name: host2
   metadata:
     etcd_name: node2
+  bmc:
+    boot_prio: 0
 - name: host3
   metadata:
     etcd_name: node3
+  bmc:
+    boot_prio: 2
 ---
 host_group: etcd-proxy
+bmc:
+  boot_prio: 1
+  max_concurrent: 5%
 hosts:
   - name: proxy1
   - name: proxy2
 ---
 host_group: clevos
+bmc:
+  boot_prio: 2
+  max_concurrent: 1
+  flush_pipeline:
+    image: <docker_image>
+    commands:
+      - run commands other details
+    image: <docker_image2>
+    commands:
+      - run commands other details
 hosts:
 - name: clevos1
   metadata:
