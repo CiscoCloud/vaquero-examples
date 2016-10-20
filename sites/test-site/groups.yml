@@ -2,7 +2,7 @@
 host_group: etcd-cluster
 bmc:
   boot_prio: 0
-  max_concurrent: 1
+  max_concurrent: 3
   flush_pipeline:
     image: <docker_image>
     commands:
