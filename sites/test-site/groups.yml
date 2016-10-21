@@ -1,16 +1,25 @@
 ---
 host_group: etcd-cluster
 bmc:
-  boot_prio: 0
   max_concurrent: 3
+  safe_deps: [<dependencies>]
+  block_deps: [<dependencies>]
+  val_on_deps: [<dependencies>]
+  max_fail: 1
   flush_pipeline:
     image: <docker_image>
+    pull: true
+    environment:
+      - TEST = hahaha
     commands:
       - run commands
     image: <docker_image2>
+    pull: true
+    environment:
+      - TEST = hahaha
     commands:
       - run commands
-  resurrect_pipeline:
+  validate_pipeline:
     image: <docker_image>
     commands:
       - run commands
@@ -18,29 +27,30 @@ hosts:
 - name: host1
     etcd_name: node1
   bmc:
-    boot_prio: 1
+    boot_number: 1
 - name: host2
   metadata:
     etcd_name: node2
   bmc:
-    boot_prio: 0
+    boot_number: 0
 - name: host3
   metadata:
     etcd_name: node3
   bmc:
-    boot_prio: 2
+    boot_number: 2
 ---
 host_group: etcd-proxy
 bmc:
-  boot_prio: 1
+  boot_number: 1
   max_concurrent: 5%
+  max_fail: 0
 hosts:
   - name: proxy1
   - name: proxy2
 ---
 host_group: clevos
 bmc:
-  boot_prio: 2
+  boot_number: 2
   max_concurrent: 1
   flush_pipeline:
     image: <docker_image>
