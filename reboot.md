@@ -18,7 +18,7 @@
 
 ## Fields for `host_group` only
 
-- `max_concurrent`: an integer or percentage of max number of machines that could reboot at one time. For percentage we will round down, the last batch will be the remainder. A value of 0 would mean all machines can be rebooted at the same time, conversely a percentage of 100% could do the same. Default is 1.
+- `max_concurrent`: an integer or percentage of max number of machines that could reboot at one time. For percentage we will round down, the last batch will be the remainder. A value of 0 would mean all machines can be rebooted at the same time, conversely a percentage of 100% could do the same. Default is 0.
 
 - `safe_deps`: a list of dependencies that this host group has and can concurrently boot with. Default: empty
 
@@ -26,7 +26,7 @@
 
 - `val_on_deps`: a list of dependencies that this host_group should run its `validate_pipeline` given a dependency in this list is changed. Default: empty
 
-- `max_fail`: the maximum number or percentage of machines that is considered an acceptable failure rate. This is just to protect one machine hardware failure from blocking the entire update. Default: 0
+- `max_fail`: the maximum number or percentage of machines that is considered an acceptable failure rate. This is to protect one machine hardware failure from blocking the entire update. Default: 0
 
 ## Fields for `host` only
 
