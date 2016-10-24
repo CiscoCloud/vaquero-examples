@@ -32,8 +32,23 @@
 
 - `boot_number`: the integer that specifies the booting order of the hosts in the group. We will boot from lowest to highest, ties will boot in any order. Default: 0
 
+## [`policy.md`](https://github.com/CiscoCloud/vaquero-examples/blob/boot-prio/sites/test-site/policy.yml)
+
+- `boot_times`: a list of time frames that vaquero is allowed to reboot machines in.
+
+- `ignore_deps`: a boolean that would specify if vaquero should ignore dependencies. Specifying `true` would have every machine boot at the same time, not taking any dependency work into account.
+
+- `on_failure: retry`: an integer that specifies how many times vaquero should retry a specific host.
+
+- `on_failure: then`: a string that specifies the options `rollback`, `halt`, `continue` and is the behavior vaquero will take given a failure occurs.
+
+  - `rollback`: will bring the affected hosts back to the last valid data model.
+
+  - `halt`: will stop the update in place and no longer take action on that inventory.
+
+  - `continue`: will ignore errors and continue with rolling out the updated model.
+
 ## Concerns:
 
 - Private docker registry, might need more details. URL, User, Password. See how [Drone Docs](http://readme.drone.io/usage/build_test/) handles this.
-- Don't want to clutter the data model, but don't want to make people re-write the host_groups and hosts to specify BMC options. Regardless, all the BMC details should be explicit and live in one file.
 - How exactly does one flush / resurrect from the vaquero agent. (Need to ssh or something into a given machine and we will look at exit codes to decide if a step in the pipeline was a success or failure. `os.Exit(0) = success` and `os.Exit(1) = failure`) We need to capture the log output from that container.
