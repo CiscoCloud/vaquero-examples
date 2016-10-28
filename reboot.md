@@ -12,9 +12,9 @@
 
 ### Fields for `host_group` and `host`
 
-- `flush_pipeline`: the pipeline of containers to execute before shutting down a machine. This is exactly like `drone.yml`, the intent is that we will run containers from top to bottom, only proceeding to the next container if the prior passed. Not declaring a `flush_pipeline` would indicate vaquero can shut down the host without taking any actions. Default: empty
+- `flush_pipeline`: the pipeline of containers to execute before shutting down a machine. This is exactly like `drone.yml`, the intent is that we will run containers from top to bottom, only proceeding to the next container if the prior passed. Not declaring a `flush_pipeline` would indicate vaquero can shut down the host without taking any actions. This pipeline will run serially, and stop at the first failure. Default: empty
 
-- `validate_pipeline`: the pipeline of containers to execute after a reboot. This is exactly like `drone.yml`, the intent is that we will run containers from top to bottom, only proceeding to the next container if the prior passed. Not declaring a `validate_pipeline` would indicate vaquero can bring up the host without taking any actions. Default: empty
+- `validate_pipeline`: the pipeline of containers to execute after a reboot. This is exactly like `drone.yml`, the intent is that we will run containers from top to bottom, only proceeding to the next container if the prior passed. Not declaring a `validate_pipeline` would indicate vaquero can bring up the host without taking any actions. This pipeline will always run every validation step and report all validation results, and will fail if at least one step fails. Default: empty
 
 ## Fields for `host_group` only
 
