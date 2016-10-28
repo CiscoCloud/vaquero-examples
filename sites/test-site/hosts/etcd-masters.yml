@@ -5,12 +5,17 @@ interfaces:
     dhcp: yes
     subnet: default
     mac: 00:00:00:00:00:01
+    bmc: 
+        type: ipmi # <AMS> ipmi (specifically over LAN)/cimc/etc
+        username: adam
+        password: schaub
     identifier: eth0
     ipv4: 10.10.10.10
     hostname: host1
-    # <AMS> could add ipv6 later
+# <AMS> could add ipv6 later
 ---
 name: host2
+interfaces:
   - type: physical
     dhcp: yes
     subnet: default
@@ -20,6 +25,7 @@ name: host2
     hostname: host2
 ---
 name: host3
+interfaces:
   - type: physical
     dhcp: yes
     subnet: default

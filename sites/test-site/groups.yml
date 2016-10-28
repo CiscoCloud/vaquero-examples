@@ -1,7 +1,10 @@
 ---
 host_group: etcd-cluster
+selectors: 
+  rootvol: installed
 hosts:
 - name: host1
+  metadata:
     etcd_name: node1
 - name: host2
   metadata:
@@ -12,8 +15,8 @@ hosts:
 ---
 host_group: etcd-proxy
 hosts:
-  - name: proxy1
-  - name: proxy2
+- name: proxy1
+- name: proxy2
 ---
 host_group: clevos
 hosts:
