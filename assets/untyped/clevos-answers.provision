@@ -12,9 +12,9 @@ reboot = true
 script: channel data port p6p1, p7p1
         channel data bonding balanced
         channel data bond_xmit_policy layer2
-        channel data ip {{.host.ipv4_address}}
-        channel data netmask {{.env.subnet.netmask}}
-        channel data gateway {{.env.subnet.gateway}}
+        channel data ip {{.host.interface.ipv4}}
+        channel data netmask {{.host.interface.subnet.netmask}}
+        channel data gateway {{.host.interface.subnet.gateway}}
         system hostname {{.host.clever_name}}
         system organization cdvr
         system city philadelphia

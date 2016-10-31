@@ -1,0 +1,33 @@
+# Workflows chain a series of "boots" together. A host will
+# attach itself to a single workflow. A single "boot" is a
+# complete provisioning (bootloader & unattended config/install)
+id: etcd-cluster
+# or boot-order?
+workflow:
+  - boot: wipe-disk
+    #next-boot: etcd-master <- implicit
+    metadata:
+      some: date just for hosts using this workflow
+    # Some validation? Ignore validation of boot? This probably belongs in the boot object
+    # A place for policy? Retries, pause after, pause before
+  - boot: etcd-master
+    next-boot: etcd-master # next-boot is self, also implicit, as last item
+    # next-boot: wipe-disk # or go to first stage if rebooted
+
+
+# API call. 0 index the stages enumerated here.
+# GET {{ .agentURL }}/config/<mac-addr>?stage=0
+# OR
+# GET {{ .agentURL }}/config/<mac-addr>?boot=wipe-disk
+
+# Don't use kickstart/cloud-config/ignition. Just /config/<mac-addr>?boot=<workflow-stage-id>
+
+# To host state, add "next-boot" that points to the next group
+# to use to provision this host. Next-boot is set _after_ a
+# successful boot has occurred.
+
+# Expose an API for setting the "next-boot" of a particular
+# host.
+# POST {{ .agentURL }}/host/<host-id>?next-boot=0
+# OR
+# POST {{ .agentURL }}/host/<host-id>?next-boot=wipe-disk

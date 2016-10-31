@@ -1,0 +1,11 @@
+---
+name: clevos1
+interfaces:
+  - type: physical
+    subnet: default
+    mac: 00:00:00:00:00:06
+    ipv4: 192.128.1.16
+    hostname: proxy1
+metadata:
+  clever_name: haha
+workflow: etcd-cluster
