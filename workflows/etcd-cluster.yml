@@ -28,4 +28,6 @@ workflow:
 
 # Expose an API for setting the "next-boot" of a particular
 # host.
-# POST {{ .agentURL }}
+# POST {{ .agentURL }}/host/<host-id>?next-boot=0
+# OR
+# POST {{ .agentURL }}/host/<host-id>?next-boot=wipe-disk
