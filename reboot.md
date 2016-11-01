@@ -38,15 +38,13 @@
 
 - `ignore_deps`: a boolean that would specify if vaquero should ignore dependencies. Specifying `true` would have every machine boot at the same time, not taking any dependency work into account.
 
-- `on_failure: retry`: an integer that specifies how many times vaquero should retry a specific host.
+- `timeout`: the time in seconds to wait for a specific tasks that is run on the agent
 
-- `on_failure: then`: a string that specifies the options `rollback`, `halt`, `continue` and is the behavior vaquero will take given a failure occurs.
+- `on_failure`:
 
-  - `rollback`: will bring the affected hosts back to the last valid data model.
+  - `retry`: an integer that specifies how many times vaquero should retry a specific host.
 
-  - `halt`: will stop the update in place and no longer take action on that inventory.
-
-  - `continue`: will ignore errors and continue with rolling out the updated model.
+  - `then`: a string that specifies the options `rollback`, `halt`, `continue` and is the behavior vaquero will take given a failure occurs. `rollback`: will bring the affected hosts back to the last valid data model. `halt`: will stop the update in place and no longer take action on that inventory. `continue`: will ignore errors and continue with rolling out the updated model.
 
 ## Concerns:
 

@@ -1,6 +1,7 @@
 ---
 boot_times: [23:30-05:00]
 ignore_deps: false
+timeout: 60
 on_failure:
   retry: 3
   then: rollback
