@@ -46,6 +46,8 @@
 
   - `then`: a string that specifies the options `rollback`, `halt`, `continue` and is the behavior vaquero will take given a failure occurs. `rollback`: will bring the affected hosts back to the last valid data model. `halt`: will stop the update in place and no longer take action on that inventory. `continue`: will ignore errors and continue with rolling out the updated model.
 
+- `timeout`: the time in seconds to wait for a specific tasks that is run on the agent
+
 ## Concerns:
 
 - Private docker registry, might need more details. URL, User, Password. See how [Drone Docs](http://readme.drone.io/usage/build_test/) handles this.
