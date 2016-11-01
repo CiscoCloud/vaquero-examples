@@ -48,6 +48,8 @@
 
   - `continue`: will ignore errors and continue with rolling out the updated model.
 
+- `timeout`: the time in seconds to wait for a specific tasks that is run on the agent
+
 ## Concerns:
 
 - Private docker registry, might need more details. URL, User, Password. See how [Drone Docs](http://readme.drone.io/usage/build_test/) handles this.
