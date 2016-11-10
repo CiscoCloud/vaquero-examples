@@ -9,12 +9,13 @@ networkd:
         Gateway={{.host.subnet.gateway}}
         DNS={{ index .host.subnet.dns 0 }}
         Address={{ .interface.ipv4 }}
-{{ if index .env "ssh_authorized_keys" }}
 
 systemd:
   units:
-    {{ template "etcd2" .}}
+    {{- template "etcd2" .}}
 
+
+{{ if index .env "ssh_authorized_keys" }}
 passwd:
   users:
     - name: core
