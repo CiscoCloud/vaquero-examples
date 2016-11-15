@@ -9,14 +9,25 @@ confirm = false
 reboot = true
 
 [post]
-script: channel data port p6p1, p7p1
+script: channel data port p6p1, p6p2
         channel data bonding balanced
-        channel data bond_xmit_policy layer2
-        channel data ip {{.host.ipv4_address}}
-        channel data netmask {{.env.subnet.netmask}}
-        channel data gateway {{.env.subnet.gateway}}
-        system hostname {{.host.clever_name}}
+        {{ with index .host.interfaces 0 }}
+        channel data ip {{ .ipv4 }}
+        channel data netmask {{ .subnet.netmask }}
+        {{ end }}
+        channel client port em1, em2
+        channel client bonding balanced
+        {{ with index .host.interfaces 1 }}
+        channel client ip {{ .ipv4 }}
+        channel client netmask {{ .subnet.netmask }}
+        channel client gateway {{ .subnet.gateway }}
+        {{ end }}
+        system hostname {{ .host.name }}
         system organization cdvr
         system city philadelphia
         system state pa
         system country us
+        system dns {{ range $i, $dns := .interface.subnet.dns }}{{ if $i }},{{ end }}{{ $dns }}{{ end }}
+        system ntpservers  {{ range $i, $ntp := .interface.subnet.ntp }}{{ if $i }},{{ end }}{{ $ntp }}{{ end }}
+        manager ip {{ .host.metadata.manager }}
+        password {{ .boot.metadata.root_pass }}

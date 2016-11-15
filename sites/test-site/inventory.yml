@@ -1,42 +1,82 @@
 ---
-host_group: etcd-proxy
-hosts:
-- name: proxy1
-  selectors:
-    mac: 00:00:00:00:00:04
-- name: proxy2
-  selectors:
-    mac: 00:00:00:00:00:05
----
-host_group: etcd-cluster
-hosts:
-- name: host1
-  selectors:
+name: host1
+interfaces:
+  - type: physical
+    subnet: default
     mac: 00:00:00:00:00:01
-  metadata:
-    ipv4_address: 10.10.10.10
-    networkd_address: 10.10.10.10/16
+    bmc: 
+        type: ipmi
+        username: adam
+        password: schaub
+    identifier: eth0
+    ipv4: 10.10.10.10
+metadata:
     etcd_name: node1
-- name: host2
-  selectors:
-    mac: 00:00:00:00:00:02
-  metadata:
-    ipv4_address: 10.10.10.11
-    networkd_address: 10.10.10.11/16
-    etcd_name: node2
-- name: host3
-  selectors:
-    mac: 00:00:00:00:00:03
-  metadata:
-    ipv4_address: 10.10.10.12
-    networkd_address: 10.10.10.12/16
-    etcd_name: node3
+workflow: etcd-master
 ---
-host_group: clevos
-hosts:
-- name: clevos1
-  selectors:
+name: host2
+interfaces:
+  - type: physical
+    subnet: default
+    mac: 00:00:00:00:00:02
+    identifier: eth0
+    ipv4: 10.10.10.11
+metadata:
+    etcd_name: node2
+workflow: etcd-master
+---
+name: host3
+interfaces:
+  - type: physical
+    subnet: default
+    mac: 00:00:00:00:00:03
+    identifier: eth0
+    ipv4: 10.10.10.12
+metadata:
+    etcd_name: node3
+workflow: etcd-master
+---
+name: proxy1
+interfaces:
+  - type: physical
+    subnet: default
+    mac: 00:00:00:00:00:04
+    identifier: eth0
+    ipv4: 10.10.10.13
+  - type: physical
+    subnet: default
+    mac: 00:00:00:00:00:14
+    identifier: eth1
+    ipv4: 10.10.10.23
+workflow: etcd-proxy
+---
+name: proxy2
+interfaces:
+  - type: physical
+    subnet: default
+    mac: 00:00:00:00:00:05
+    identifier: eth0
+    ipv4: 10.10.10.14
+  - type: physical
+    subnet: default
+    mac: 00:00:00:00:00:15
+    identifier: eth1
+    ipv4: 10.10.10.24
+workflow: etcd-proxy
+---
+name: clevos1
+interfaces:
+  - type: physical
+    subnet: default
     mac: 00:00:00:00:00:06
-  metadata:
-    ipv4_address: 192.128.1.16
-    clever_name: haha
+    ipv4: 10.10.10.15
+    identifier: eth0
+    hostname: clevos1
+  - type: physical
+    subnet: clevos
+    mac: 00:00:00:00:01:06
+    ipv4: 192.128.1.16
+    identifier: eth1
+metadata:
+  manager: 10.10.10.10
+workflow: clevos

@@ -1,0 +1,3 @@
+id: etcd-proxy
+workflow:
+  - boot: etcd-proxy
