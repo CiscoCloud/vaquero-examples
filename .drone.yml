@@ -1,0 +1,7 @@
+pipeline:
+  unittest:
+    image: shippedrepos-docker-vaquero.bintray.io/vaquero/vaquero:latest
+    pull: true
+    commands:
+      - vaquero validate --sot .
+
