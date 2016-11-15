@@ -1,6 +1,6 @@
 pipeline:
   unittest:
-    image: docker:dind
+    image: docker:dind:1.12.1
     privileged: true
     pull: true
     commands:
