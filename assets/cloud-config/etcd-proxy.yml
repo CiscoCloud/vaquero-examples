@@ -7,10 +7,10 @@ coreos:
   etcd2:
     proxy: on
     listen-client-urls: http://0.0.0.0:2379
-    initial-cluster: {{ .env.etcd_initial_cluster }}
+    initial-cluster: {{ .env.md.etcd_initial_cluster }}
 
   fleet:
-    metadata: "{{ .boot.fleet_metadata }},vlan={{ .host.subnet.vlan }}"
+    metadata: "{{ .boot.md.fleet_metadata }},vlan={{ .interface.subnet.vlan }}"
 
   units:
     - name: down-interfaces.service

@@ -73,7 +73,7 @@ interfaces:
     identifier: eth0
     hostname: clevos1
   - type: physical
-    subnet: default
+    subnet: clevos
     mac: 00:00:00:00:01:06
     ipv4: 192.128.1.16
     identifier: eth1

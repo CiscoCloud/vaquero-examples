@@ -6,8 +6,8 @@ networkd:
         [Match]
         MACAddress={{.interface.mac}}
         [Network]
-        Gateway={{.host.subnet.gateway}}
-        DNS={{ index .host.subnet.dns 0 }}
+        Gateway={{.interface.subnet.gateway}}
+        DNS={{ index .interface.subnet.dns 0 }}
         Address={{ .interface.ipv4 }}
 
 systemd:
