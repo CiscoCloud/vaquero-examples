@@ -25,17 +25,6 @@ metadata:
     etcd_name: node2
 workflow: etcd-master
 ---
-name: host3
-interfaces:
-  - type: physical
-    subnet: default
-    mac: 00:00:00:00:00:03
-    identifier: eth0
-    ipv4: 10.10.10.12
-metadata:
-    etcd_name: node3
-workflow: etcd-master
----
 name: proxy1
 interfaces:
   - type: physical
