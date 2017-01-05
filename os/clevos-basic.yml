@@ -11,19 +11,19 @@ boot:
   - "{{.env.agentURL}}/files/boot/acc/clevos.initrd"
 cmdline:
   # Have to manually specify 'untyped' kernel opts
-  lang: ' '
-  live-getty: ''
-  console: 'ttyS0,115200n8'
-  console: 'tty0'
-  union: 'aufs'
-  text: ''
-  boot: 'live'
-  live-netdev: 'eth2'
-  ethdevice: 'eth2'
-  ethdevice-timeout: '300'
-  clevos.runinstall:
-  noprompt: 
-  clevos.installer.answers: "{{.boot.configURL}}" # configUrl is the full URL (with selectors) for this host's unattened config script
-  dhcp: 
-  config:
-  fetch: 
+  - lang: ' '
+  - live-getty: ''
+  - console: 'ttyS0,115200n8'
+  - console: 'tty0'
+  - union: 'aufs'
+  - text: ''
+  - boot: 'live'
+  - live-netdev: 'eth2'
+  - ethdevice: 'eth2'
+  - ethdevice-timeout: '300'
+  - clevos.runinstall:
+  - noprompt:
+  - clevos.installer.answers: "{{.boot.configURL}}" # configUrl is the full URL (with selectors) for this host's unattened config script
+  - dhcp:
+  - config:
+  - fetch:
