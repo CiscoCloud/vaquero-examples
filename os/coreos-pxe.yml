@@ -10,6 +10,6 @@ boot:
   initrd:
   - "{{.env.agentURL}}/files/coreos_production_pxe_image.cpio.gz"
 cmdline:
-  coreos.autologin: ''
+  - coreos.autologin: ''
   #This line is needed for EFI PXE boots. https://github.com/coreos/bugs/issues/1239
-  initrd: "coreos_production_pxe_image.cpio.gz"
+  - initrd: "coreos_production_pxe_image.cpio.gz"
