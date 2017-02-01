@@ -4,12 +4,17 @@ interfaces:
   - type: physical
     subnet: default
     mac: 00:00:00:00:00:01
+    identifier: eth0
+    ipv4: 10.10.10.10
+  - type: physical
+    subnet: default
+    mac: 00:00:00:00:01:01
     bmc: 
         type: ipmi
         username: adam
         password: schaub
-    identifier: eth0
-    ipv4: 10.10.10.10
+    identifier: ipmi0
+    ipv4: 10.10.11.10
 metadata:
     etcd_name: node1
 workflow: etcd-master
