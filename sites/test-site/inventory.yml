@@ -9,7 +9,7 @@ interfaces:
   - type: physical
     subnet: default
     mac: 00:00:00:00:01:01
-    bmc: 
+    bmc:
         type: ipmi
         username: adam
         password: schaub
@@ -26,8 +26,15 @@ interfaces:
     mac: 00:00:00:00:00:02
     identifier: eth0
     ipv4: 10.10.10.11
+    bmc:
+      type: ssh
+      username: core
+      keypath: /vagrant/provision_files/id_rsa
 metadata:
     etcd_name: node2
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDI0kPZ6jtnDXy7cVJQLpWxOlPefYBt6p2CdxEV/f4zppkaVPLl2Nc4IhBQdEQqjgxTFonnIEQ29gQug5IpyrjQ6GvNDjzZ/Oq/Vwj52h6OLr9RcUaU3OZkDp5uyo1Wrg8HqAD5bcZwgJgo+7T2eQTdFECnv1IDHJrTVF48paA9mf600zoKvncKKo6jixRDFc9eQb6Mq0Mbh2ABy8V0j5T42qjzJJixNnUZDRflGSKFDl3GEkZuXe3bGUqT865/Pe+sKoWeGagL2cXpwkfhiSM+XQSf/TFKf/h3ABImEqDw4hO7x2W2Dd5s+SAGl+LbsCuxvRUE20m5tlMX4bPpSTAj vagrant@vs-1
+
 workflow: etcd-master
 ---
 name: host3
@@ -53,6 +60,8 @@ interfaces:
     mac: 00:00:00:00:00:14
     identifier: eth1
     ipv4: 10.10.10.23
+metadata:
+    etcd_name: proxy1
 workflow: etcd-proxy
 ---
 name: proxy2
@@ -67,6 +76,8 @@ interfaces:
     mac: 00:00:00:00:00:15
     identifier: eth1
     ipv4: 10.10.10.24
+metadata:
+    etcd_name: proxy2
 workflow: etcd-proxy
 ---
 name: clevos1

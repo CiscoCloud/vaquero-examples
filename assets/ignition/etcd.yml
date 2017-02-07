@@ -15,12 +15,12 @@ systemd:
     {{- template "etcd2" .}}
 
 
-{{ if index .env "ssh_authorized_keys" }}
+{{ if index .host.metadata "ssh_authorized_keys" }}
 passwd:
   users:
     - name: core
       ssh_authorized_keys:
-        {{ range $element := .env.ssh_authorized_keys }}
+        {{ range $element := .host.metadata.ssh_authorized_keys }}
         - {{$element}}
         {{end}}
 {{end}}

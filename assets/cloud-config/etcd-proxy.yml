@@ -28,11 +28,11 @@ coreos:
       command: start
     - name: fleet.service
       command: start
-      
 
-{{ if index .env "ssh_authorized_keys" }}
+
+{{ if index .host.metadata "ssh_authorized_keys" }}
 ssh_authorized_keys:
-  {{ range $element := .env.ssh_authorized_keys }}
+  {{ range $element := .host.metadata.ssh_authorized_keys }}
   - {{$element}}
   {{end}}
 {{end}}
@@ -79,6 +79,6 @@ write_files:
     content: |
       [Match]
       Name={{ index .host "interfaces" 1 "identifier" }}
-      
+
       [Network]
       Bond=po0
