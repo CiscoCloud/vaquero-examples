@@ -13,7 +13,15 @@ networkd:
 systemd:
   units:
     {{- template "etcd2" .}}
-
+    - name: checkpoint.service
+      enable: true
+      contents: |
+        [Service]
+        ExecStart=/usr/bin/curl {{ Checkpoint }}
+        Restart=on-failure
+        RestartSec=5s
+        [Install]
+        WantedBy=multi-user.target
 
 {{ if index .host.metadata "ssh_authorized_keys" }}
 passwd:

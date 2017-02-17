@@ -6,7 +6,7 @@ interfaces:
     mac: 00:00:00:00:00:01
     identifier: eth0
     ipv4: 10.10.10.10
-  - type: physical
+  - type: bmc
     subnet: default
     mac: 00:00:00:00:01:01
     bmc:
@@ -44,6 +44,20 @@ interfaces:
     mac: 00:00:00:00:00:03
     identifier: eth0
     ipv4: 10.10.10.12
+
+  - type: bmc
+    subnet: default
+    mac: 00:00:00:00:01:03
+    identifier: eth0
+    ipv4: 10.10.10.120
+    bmc:
+      type: custom
+      container:
+        image: vaquero.registry.com/ipmi:latest
+        pull: yes
+        commands:
+          - ipmitool -H 10.10.10.120 -I imb -U root -P secret power cycle
+        timeout: 60
 metadata:
     etcd_name: node3
 workflow: etcd-master
