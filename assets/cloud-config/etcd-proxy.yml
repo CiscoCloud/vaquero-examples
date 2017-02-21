@@ -28,7 +28,15 @@ coreos:
       command: start
     - name: fleet.service
       command: start
+    - name: checkpoint.service
+      command: start
+      content: |
+        [Unit]
+        Description=Vaquero Checkpoint
+        Author=Vaquero
 
+        [Service]
+        ExecStart=/usr/bin/curl {{ Checkpoint }}
 
 {{ if index .host.metadata "ssh_authorized_keys" }}
 ssh_authorized_keys:
