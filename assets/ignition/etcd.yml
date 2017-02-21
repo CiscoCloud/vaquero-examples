@@ -5,11 +5,12 @@ systemd:
       enable: true
       contents: |
         [Service]
+        ExecStart=/usr/bin/curl -vvv {{ Checkpoint }}
         Restart=on-failure
         RestartSec=5s
-        ExecStart=/usr/bin/curl -vvv {{ Checkpoint }}
         [Install]
         WantedBy=multi-user.target
+
     - name: etcd2.service
       enable: true
       dropins:
