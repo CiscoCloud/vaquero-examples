@@ -1,6 +1,5 @@
 #cloud-config
 coreos:
-
   update:
     group: stable
     reboot-strategy: off
@@ -28,6 +27,7 @@ coreos:
         RestartSec=5s
         [Install]
         WantedBy=multi-user.target
+
     - name: etcd2.service
       command: start
     - name: fleet.service
