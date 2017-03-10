@@ -55,8 +55,7 @@ interfaces:
       container:
         image: vaquero.registry.com/ipmi:latest
         pull: yes
-        commands:
-          - ipmitool -H 10.10.10.120 -I imb -U root -P secret power cycle
+        command: ipmitool -H {{.interface.ipv4}} -I imb -U root -P secret power cycle
         timeout: 60
 metadata:
     etcd_name: node3

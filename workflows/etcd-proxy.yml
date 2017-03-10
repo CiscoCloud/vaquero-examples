@@ -1,3 +1,6 @@
 id: etcd-proxy
 workflow:
   - boot: etcd-proxy
+
+deps:
+  block_deps: ['etcd-master'] # Wait for min_standing in etcd-master before reprovisioning

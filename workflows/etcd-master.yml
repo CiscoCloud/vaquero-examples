@@ -2,8 +2,9 @@
 # attach itself to a single workflow. A single "boot" is a
 # complete provisioning (bootloader & unattended config/install)
 id: etcd-master
-# or boot-order?
 workflow:
   - boot: etcd-master
-    next-boot: etcd-master # next-boot is self, also implicit, as last item
-    # next-boot: wipe-disk # or go to first stage if rebooted
+
+deps:
+  max_concurrent: 2 # Only 2 hosts my reprovision in this workflow at a time
+  min_standing: 1 # Unblocks dependant workflows once 1 host from this workflow is reprovisioned
