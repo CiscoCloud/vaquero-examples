@@ -10,3 +10,20 @@ unattended:
 
 metadata:
   fleet_role: etcd
+
+before_shutdown:
+  - image: busybox
+    pull: yes
+    command: /bin/ls
+    args:
+      - -la
+      - /
+    retry: 0
+    timeout: 60
+
+validate:
+  - image: busybox
+    pull: yes
+    command: "if [ ! -e /etc ]; then echo 'SOMETHINGS WRONG!!!'; exit 1; fi"
+    retry: 0
+    timeout: 60
