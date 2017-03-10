@@ -55,7 +55,7 @@ interfaces:
       container:
         image: vaquero.registry.com/ipmitool:latest
         pull: yes
-        args: [-H, 10.10.10.103, -I, lanplus, -U, root, -P, secret, power, cycle]
+        args: [-H, '{{.interface.ipv4}}', -I, lanplus, -U, root, -P, secret, power, cycle]
         timeout: 60
 metadata:
     etcd_name: node3

@@ -11,19 +11,21 @@ unattended:
 metadata:
   fleet_role: etcd
 
+
+#Run before shutting down a host using this boot
 before_shutdown:
-  - image: busybox
+  - image: byrnedo/alpine-curl
     pull: yes
-    command: /bin/ls
-    args:
-      - -la
-      - /
+    command: 'echo'
+    args: ['shutting down etcd master']
     retry: 0
     timeout: 60
 
+# Validate that the etcd2 service is running correctly
 validate:
-  - image: busybox
+  - image: byrnedo/alpine-curl
     pull: yes
-    command: "if [ ! -e /etc ]; then echo 'SOMETHINGS WRONG!!!'; exit 1; fi"
+    command: 'curl -s "http://{{.interface.ipv4}}:2379/health" | grep "true" && echo "Etcd HEALTHY"'
     retry: 0
-    timeout: 60
+    timeout: 61
+
