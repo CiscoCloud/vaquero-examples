@@ -10,3 +10,17 @@ unattended:
 
 metadata:
   fleet_metadata: role=etcd-proxy
+
+before_shutdown:
+  - image: vaquero.registry.com/ipmi:latest
+    pull: yes
+    args: [-I, lanplus, -U, root, -P, secret, chassis, status]
+    retry: 0
+    timeout: 60
+
+validate:
+  - image: busybox
+    pull: yes
+    command: "if [ ! -e /etc ]; then echo 'SOMETHINGS WRONG!!!'; exit 1; fi"
+    retry: 0
+    timeout: 60
